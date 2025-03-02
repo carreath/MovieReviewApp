@@ -1,0 +1,88 @@
+.user-select-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  font-family: "Roboto", sans-serif;
+}
+
+.user-select-header {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.user-select-header h2 {
+  margin-bottom: 0.5rem;
+  color: #00796b;
+}
+
+.user-select-form {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.user-select-form input[type="text"] {
+  padding: 0.5rem;
+  font-size: 1rem;
+  width: 60%;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.user-select-form button {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  background: #00796b;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.user-select-form button:hover {
+  background: #004d40;
+}
+
+.user-cards-section {
+  text-align: center;
+}
+
+.user-cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.user-card {
+  background: linear-gradient(135deg, #cfd8dc, #eceff1);
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.user-card:hover {
+  transform: translateY(-3px);
+  background: linear-gradient(135deg, #b0bec5, #cfd8dc);
+}
+
+.user-select-message {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 1.1rem;
+  color: #00796b;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .user-select-form input[type="text"] {
+    width: 70%;
+  }
+}

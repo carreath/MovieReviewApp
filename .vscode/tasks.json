@@ -1,0 +1,14 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "npm: start client",
+      "type": "shell",
+      "command": "npm run start",
+      "options": {
+        "cwd": "${workspaceFolder}/client"
+      },
+      "problemMatcher": []
+    }
+  ]
+}

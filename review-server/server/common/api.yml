@@ -1,0 +1,698 @@
+openapi: 3.0.1
+info:
+  title: review-server
+  description: Movie Review Server
+  version: 1.0.0
+servers:
+  - url: /api/v1
+tags:
+  - name: Dev Tools
+    description: Endpoints for development and debugging operations
+  - name: Specification
+    description: The swagger API specification
+paths:
+  /dev:
+    get:
+      tags:
+        - Dev Tools
+      description: Confirms the controller can communicate
+      responses:
+        '200':
+          description: The controller responded successfully.
+        '500':
+          description: The controller failed to respond.
+  /dev/reinitialize:
+    post:
+      tags:
+        - Dev Tools
+      description: Reinitialize the index by deleting and recreating it.
+      responses:
+        '200':
+          description: Index reinitialized successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Index reinitialized successfully
+        '500':
+          description: Failed to reinitialize index.
+  /dev/clear:
+    post:
+      tags:
+        - Dev Tools
+      description: Clear all documents from the index.
+      responses:
+        '200':
+          description: Index cleared successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Index cleared successfully
+        '500':
+          description: Failed to clear index.
+  /dev/{id}:
+    delete:
+      tags:
+        - Dev Tools
+      description: Delete a specific document by its ID.
+      parameters:
+        - name: id
+          in: path
+          description: The ID of the document to delete.
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Document deleted successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Document with id 123 deleted successfully
+        '500':
+          description: Failed to delete document.
+  /dev/add-example:
+    post:
+      tags:
+        - Dev Tools
+      description: Add an example review to the index.
+      responses:
+        '201':
+          description: Example review added successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Example review added successfully
+                  review:
+                    $ref: '#/components/schemas/Review'
+        '500':
+          description: Failed to add example review.
+  /reviews:
+    get:
+      tags:
+        - Reviews
+      summary: Get all reviews
+      description: Retrieve an array of all existing reviews.
+      responses:
+        '200':
+          description: Successfully retrieved reviews
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Review'
+        '500':
+          description: Failed to fetch reviews
+    post:
+      tags:
+        - Reviews
+      summary: Create a new review
+      description: Add a new review document to the system.
+      requestBody:
+        description: Fields required to create a new review
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateReviewData'
+      responses:
+        '201':
+          description: Review created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Review'
+        '500':
+          description: Failed to create review
+  /reviews/{id}:
+    get:
+      tags:
+        - Reviews
+      summary: Get a single review by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the review to retrieve
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successfully retrieved the review
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Review'
+        '404':
+          description: Review not found
+        '500':
+          description: Failed to fetch review
+    put:
+      tags:
+        - Reviews
+      summary: Update an existing review
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the review to update
+          schema:
+            type: integer
+      requestBody:
+        description: Fields to update in the review
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateReviewData'
+      responses:
+        '200':
+          description: Review updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Review'
+        '404':
+          description: Review not found
+        '500':
+          description: Failed to update review
+    delete:
+      tags:
+        - Reviews
+      summary: Delete a review
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the review to delete
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Review deleted successfully
+        '404':
+          description: Review not found
+        '500':
+          description: Failed to delete review
+  /movies:
+    get:
+      tags:
+        - Movies
+      summary: Get all movies
+      description: Retrieve an array of all movies.
+      responses:
+        '200':
+          description: Movies retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Movie'
+        '500':
+          description: Internal server error
+    post:
+      tags:
+        - Movies
+      summary: Create a new movie
+      description: Add a new movie to the database.
+      requestBody:
+        description: Movie object that needs to be added
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateMovieData'
+      responses:
+        '201':
+          description: Movie created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Movie'
+        '500':
+          description: Internal server error
+  /movies/{id}:
+    get:
+      tags:
+        - Movies
+      summary: Get a movie by ID
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the movie to retrieve
+      responses:
+        '200':
+          description: Movie retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Movie'
+        '404':
+          description: Movie not found
+        '500':
+          description: Internal server error
+    put:
+      tags:
+        - Movies
+      summary: Update an existing movie
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the movie to update
+      requestBody:
+        description: Updated movie object
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateMovieData'
+      responses:
+        '200':
+          description: Movie updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Movie'
+        '404':
+          description: Movie not found
+        '500':
+          description: Internal server error
+    delete:
+      tags:
+        - Movies
+      summary: Delete a movie
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the movie to delete
+      responses:
+        '204':
+          description: Movie deleted successfully
+        '404':
+          description: Movie not found
+        '500':
+          description: Internal server error
+  /movies/search/title:
+    get:
+      tags:
+        - Movies
+      summary: Search movies by title
+      description: Retrieve movies whose title matches the given query.
+      parameters:
+        - in: query
+          name: title
+          schema:
+            type: string
+          required: true
+          description: Title to search for
+      responses:
+        '200':
+          description: Search results returned successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Movie'
+        '500':
+          description: Internal server error
+  /movies/search/director:
+    get:
+      tags:
+        - Movies
+      summary: Search movies by director
+      description: Retrieve movies by a specific director.
+      parameters:
+        - in: query
+          name: director
+          schema:
+            type: string
+          required: true
+          description: Director name to search for
+      responses:
+        '200':
+          description: Search results returned successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Movie'
+        '500':
+          description: Internal server error
+  /movies/reviews/{movieId}:
+    get:
+      tags:
+        - Movies
+      summary: Get a movie by ID
+      parameters:
+        - in: path
+          name: movieId
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the movie to retrieve
+      responses:
+        '200':
+          description: Movie retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Movie'
+        '404':
+          description: Movie not found
+        '500':
+          description: Internal server error
+  /users/{id}:
+    get:
+      tags:
+        - Users
+      summary: Get a user by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Numeric ID of the user to retrieve
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: User retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: User not found
+        '500':
+          description: Failed to fetch user
+    put:
+      tags:
+        - Users
+      summary: Update an existing user
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Numeric ID of the user to update
+          schema:
+            type: integer
+      requestBody:
+        description: Fields to update for the user
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserData'
+      responses:
+        '200':
+          description: User updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: User not found
+        '500':
+          description: Failed to update user
+    delete:
+      tags:
+        - Users
+      summary: Delete a user
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Numeric ID of the user to delete
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: User deleted successfully
+        '404':
+          description: User not found
+        '500':
+          description: Failed to delete user
+  /users:
+    get:
+      tags:
+        - Users
+      summary: Get all users
+      description: Retrieve an array of all users.
+      responses:
+        '200':
+          description: Users retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '500':
+          description: Failed to fetch users
+    post:
+      tags:
+        - Users
+      summary: Create a new user
+      description: Add a new user to the system.
+      requestBody:
+        description: User object that needs to be added
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserData'
+      responses:
+        '201':
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '500':
+          description: Failed to create user
+  /users/login:
+    post:
+      tags:
+        - Users
+      summary: Login or create a user
+      description: >
+        Accepts a user name in the request body. If a user with that name exists (case-insensitive), it returns the existing user.
+        Otherwise, it creates a new user with a generated email and returns the new user.
+      requestBody:
+        description: User login data
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+              properties:
+                name:
+                  type: string
+                  example: 'Alice Johnson'
+      responses:
+        '200':
+          description: Existing user returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '201':
+          description: New user created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Missing name field
+        '500':
+          description: Failed to login user
+components:
+  schemas:
+    Review:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        userId:
+          type: integer
+          example: 2
+        comment:
+          type: string
+          example: This is an example review added via dev tools.
+        rating:
+          type: integer
+          example: 5
+        date:
+          type: string
+          format: date-time
+          example: '2025-03-01T12:00:00Z'
+    CreateReviewData:
+      type: object
+      required:
+        - userId
+        - rating
+        - comment
+      properties:
+        userId:
+          type: integer
+          example: 2
+        comment:
+          type: string
+          example: 'Mind-bending sci-fi thriller!'
+        rating:
+          type: integer
+          example: 9
+
+    UpdateReviewData:
+      type: object
+      properties:
+        userId:
+          type: integer
+          example: 2
+        comment:
+          type: string
+          example: 'Even better on second viewing!'
+        rating:
+          type: integer
+          example: 10
+    Movie:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        title:
+          type: string
+          example: 'Inception'
+        director:
+          type: string
+          example: 'Christopher Nolan'
+        releaseDate:
+          type: string
+          format: date
+          example: '2010-07-16'
+        genre:
+          type: string
+          example: 'Science Fiction'
+        description:
+          type: string
+          example: 'A mind-bending thriller about dream invasion.'
+        rating:
+          type: number
+          format: float
+          example: 8.8
+    CreateMovieData:
+      type: object
+      required:
+        - title
+        - director
+        - releaseDate
+        - genre
+        - description
+      properties:
+        title:
+          type: string
+          example: 'Inception'
+        director:
+          type: string
+          example: 'Christopher Nolan'
+        releaseDate:
+          type: string
+          format: date
+          example: '2010-07-16'
+        genre:
+          type: string
+          example: 'Science Fiction'
+        description:
+          type: string
+          example: 'A mind-bending thriller about dream invasion.'
+        rating:
+          type: number
+          format: float
+          example: 8.8
+    UpdateMovieData:
+      type: object
+      properties:
+        title:
+          type: string
+          example: 'Inception Updated'
+        director:
+          type: string
+          example: 'Christopher Nolan'
+        releaseDate:
+          type: string
+          format: date
+          example: '2010-07-16'
+        genre:
+          type: string
+          example: 'Science Fiction'
+        description:
+          type: string
+          example: 'An updated description of the movie.'
+        rating:
+          type: number
+          format: float
+          example: 9.0
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: 'Alice Johnson'
+        email:
+          type: string
+          example: 'alice.johnson@example.com'
+    CreateUserData:
+      type: object
+      required:
+        - name
+        - email
+      properties:
+        name:
+          type: string
+          example: 'Alice Johnson'
+        email:
+          type: string
+          example: 'alice.johnson@example.com'
+    UpdateUserData:
+      type: object
+      properties:
+        name:
+          type: string
+          example: 'Alice J. Johnson'
+        email:
+          type: string
+          example: 'alice.j.johnson@example.com'

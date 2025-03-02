@@ -1,0 +1,62 @@
+.seed-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  font-family: "Roboto", sans-serif;
+}
+
+.seed-container h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+  color: #00796b;
+}
+
+.seed-container p {
+  text-align: center;
+  margin-bottom: 1rem;
+  color: #555;
+}
+
+.seed-container textarea {
+  width: 100%;
+  padding: 1rem;
+  font-family: monospace;
+  font-size: 0.9rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  resize: vertical;
+}
+
+.button-row {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.button-row button {
+  flex: 1;
+  padding: 0.75rem;
+  background: #00796b;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button-row button:hover {
+  background: #004d40;
+}
+
+.seed-message {
+  margin-top: 1rem;
+  text-align: center;
+  font-weight: bold;
+  color: #00796b;
+}

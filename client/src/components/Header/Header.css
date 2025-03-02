@@ -1,0 +1,42 @@
+.app-header {
+  background: #0e86d4;
+  color: #fff;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-left h1 {
+  font-size: 1.8rem;
+  margin: 0;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
+.user-name {
+  font-size: 1rem;
+  margin-right: 1rem;
+}
+
+.seed-button {
+  background: #fff;
+  color: #0e86d4;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.seed-button:hover {
+  background-color: #cce4f6;
+}
