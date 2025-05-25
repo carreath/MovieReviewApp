@@ -248,6 +248,33 @@ paths:
                 $ref: '#/components/schemas/Movie'
         '500':
           description: Internal server error
+    put:
+      tags:
+        - Movies
+      summary: Bulk update movies
+      description: Update multiple movies in bulk.
+      requestBody:
+        required: true
+        description: An array of movie update objects. Each object must include the movie ID and any fields to update.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/BulkUpdateMovieData'
+      responses:
+        '200':
+          description: Movies updated successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'All movies updated successfully.'
+        '500':
+          description: Internal server error
   /movies/{id}:
     get:
       tags:
@@ -696,3 +723,13 @@ components:
         email:
           type: string
           example: 'alice.j.johnson@example.com'
+    BulkUpdateMovieData:
+      allOf:
+        - $ref: '#/components/schemas/UpdateMovieData'
+        - type: object
+          required:
+            - id
+          properties:
+            id:
+              type: integer
+              example: 1

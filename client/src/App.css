@@ -1,3 +1,50 @@
+/* Define default (light mode) colors using custom properties */
+/* Light mode defaults */
+:root {
+  --bg-gradient: linear-gradient(135deg, #fafafa, #e0f7fa);
+  --text-color: #333;
+  --card-bg: #fff;
+  --card-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  --header-bg: #0e86d4;
+  --input-bg: #fff;
+  --input-border: #ddd;
+  --input-text-color: #333;
+  --movie-item-hover-bg: #e0f7fa;
+}
+
+/* Dark mode overrides */
+body.dark-mode {
+  --bg-gradient: linear-gradient(135deg, #2e2e2e, #1c1c1c);
+  --text-color: #eee;
+  --card-bg: #424242;
+  --card-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  --header-bg: #333;
+  --input-bg: #555;
+  --input-border: #888;
+  --input-text-color: #eee;
+  --movie-item-hover-bg: #333;
+  --review-title-color: #64ffda;
+  --review-user-color: #ccc;
+  --review-comment-color: #eee;
+  
+  background: var(--bg-gradient);
+  color: var(--text-color);
+}
+
+/* Input & Textarea styling */
+input[type="text"],
+input[type="number"],
+textarea {
+  width: 100%;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  font-size: 1rem;
+  background-color: var(--input-bg);
+  border: 1px solid var(--input-border);
+  color: var(--input-text-color);
+  border-radius: 4px;
+}
+
 /* Reset & Global Styles */
 * {
   margin: 0;
@@ -7,15 +54,16 @@
 }
 
 body {
-  background: linear-gradient(135deg, #fafafa, #e0f7fa);
+  background: var(--bg-gradient);
   min-height: 100vh;
-  color: #333;
+  color: var(--text-color);
 }
 
 main {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  margin: 1rem
 }
 
 /* Container for the entire app */
@@ -31,7 +79,7 @@ main {
 .top-row,
 .bottom-row {
   display: grid;
-  grid-template-columns: 300px 1fr 1fr; /* Left, Middle, Right */
+  grid-template-columns: 1fr 2fr 2fr; /* Left, Middle, Right */
   gap: 1rem;
   width: 100%;
 }
@@ -39,15 +87,15 @@ main {
 /* Panel / Card styling */
 .top-row > div,
 .bottom-row > div {
-  background: #fff;
+  background: var(--card-bg);
   border-radius: 8px;
   padding: 1rem;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--card-shadow);
 }
 
 /* Buttons */
 button {
-  background: #00796b;
+  background: var(--button-bg);
   color: #fff;
   border: none;
   padding: 0.5rem 1rem;
@@ -55,8 +103,9 @@ button {
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
+
 button:hover {
-  background-color: #004d40;
+  background-color: var(--button-hover-bg);
 }
 
 /* Input & Textarea styling */
@@ -67,7 +116,7 @@ textarea {
   margin-bottom: 0.5rem;
   padding: 0.5rem;
   font-size: 1rem;
-  border: 1px solid #ddd;
+  border: 1px solid var(--input-border);
   border-radius: 4px;
 }
 
@@ -82,14 +131,15 @@ h4 {
 /* Tag style example */
 .tag {
   display: inline-block;
-  background-color: #e1f5fe;
-  color: #0277bd;
+  background-color: var(--tag-bg);
+  color: var(--tag-color);
   padding: 0.25rem 0.5rem;
   border-radius: 4px;
   margin-right: 0.25rem;
   font-size: 0.8rem;
 }
 
+/* Media Queries for Mobile */
 @media (max-width: 768px) {
   /* Stack both top and bottom rows into one column */
   .top-row,
@@ -97,7 +147,7 @@ h4 {
     grid-template-columns: 1fr;
   }
   
-  /* Optionally adjust gap and padding for smaller screens */
+  /* Adjust gap and padding for smaller screens */
   .app-container {
     padding: 0.5rem;
   }
@@ -109,12 +159,12 @@ h4 {
     margin-bottom: 1rem;
   }
   
-  /* For example, in the movie selection list, reduce max-height */
+  /* In the movie selection list, reduce max-height */
   .movies-list {
     max-height: 200px;
   }
   
-  /* Optionally center text and elements */
+  /* Center text and elements */
   h3, h2 {
     text-align: center;
   }

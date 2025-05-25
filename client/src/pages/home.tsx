@@ -66,7 +66,7 @@ function HomePage(props: { user: any }) {
           }}
           onFetchReviews={onFetchReviews}
         />
-        <ReviewForm userId={userId} selectedMovie={selectedMovie} onReviewCreatedOrUpdated={handleReviewCreatedOrUpdated} />
+        <ReviewForm userId={userId} selectedMovie={selectedMovie} reviews={reviews} onReviewCreatedOrUpdated={handleReviewCreatedOrUpdated} />
         <InstructionsOrReview userId={userId} selectedMovie={selectedMovie} reviews={reviews} onReviewDeleted={handleReviewCreatedOrUpdated} />
       </div>
 

@@ -1,3 +1,4 @@
+/* Light Mode Styles */
 .user-select-container {
   max-width: 800px;
   margin: 2rem auto;
@@ -6,6 +7,7 @@
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   font-family: "Roboto", sans-serif;
+  color: #333;
 }
 
 .user-select-header {
@@ -31,6 +33,8 @@
   width: 60%;
   border: 1px solid #ddd;
   border-radius: 4px;
+  background: #fff;
+  color: #333;
 }
 
 .user-select-form button {
@@ -42,6 +46,7 @@
   border-radius: 4px;
   cursor: pointer;
   transition: background 0.3s ease;
+  outline: none;
 }
 
 .user-select-form button:hover {
@@ -63,14 +68,16 @@
   background: linear-gradient(135deg, #cfd8dc, #eceff1);
   padding: 0.75rem 1.5rem;
   border-radius: 8px;
+  border: 1px solid #ccc;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   cursor: pointer;
-  transition: transform 0.2s ease, background 0.2s ease;
+  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
 }
 
 .user-card:hover {
   transform: translateY(-3px);
   background: linear-gradient(135deg, #b0bec5, #cfd8dc);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .user-select-message {
@@ -85,4 +92,44 @@
   .user-select-form input[type="text"] {
     width: 70%;
   }
+}
+
+/* Dark Mode Overrides */
+body.dark-mode .user-select-container {
+  background: #424242;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  color: #eee;
+}
+
+body.dark-mode .user-select-header h2 {
+  color: #80cbc4;
+}
+
+body.dark-mode .user-select-form input[type="text"] {
+  background: #555;
+  border: 1px solid #888;
+  color: #eee;
+}
+
+body.dark-mode .user-select-form button {
+  background: #009688;
+  color: #fff;
+}
+
+body.dark-mode .user-select-form button:hover {
+  background: #00796b;
+}
+
+body.dark-mode .user-card {
+  background: linear-gradient(135deg, #616161, #757575);
+  border: 1px solid #888;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+body.dark-mode .user-card:hover {
+  background: linear-gradient(135deg, #4e4e4e, #616161);
+}
+
+body.dark-mode .user-select-message {
+  color: #80cbc4;
 }

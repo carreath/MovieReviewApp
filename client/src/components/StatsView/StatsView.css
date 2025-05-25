@@ -1,0 +1,139 @@
+/* Container */
+.stats-view {
+  width: 100%;
+  padding: 1rem;
+  background: var(--card-bg, #fff);
+  border-radius: 8px;
+  box-shadow: var(--card-shadow, 0 4px 10px rgba(0, 0, 0, 0.1));
+  color: var(--text-color, #333);
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.stats-view h3 {
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+}
+
+.stats-view p {
+  margin-bottom: 1rem;
+  font-size: 1rem;
+}
+
+/* Charts Container */
+.charts-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-around;
+  flex-direction: column;
+}
+
+/* Pie Chart */
+.pie-chart-container {
+  flex: 1;
+  min-width: 150px;
+  text-align: center;
+}
+
+.pie-chart {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  margin: 0 auto;
+}
+
+.chart-label {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+}
+
+/* Bar Chart */
+.bar-chart-container {
+  flex: 1;
+  min-width: 250px;
+  flex-direction: column-reverse;
+}
+
+.total-reviews {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.bar-chart {
+  width: 100%;
+}
+
+.bar-row {
+  display: flex;
+  align-items: center;
+  height: 24px; /* Fixed height for each row */
+  margin-bottom: 6px;
+}
+
+.bar-label {
+  width: 20px;
+  font-size: 0.9rem;
+  margin-right: 0.5rem;
+  line-height: 24px; /* Align with row height */
+}
+
+.bar {
+  background-color: #4caf50;
+  height: 100%; /* Constrained by row height */
+  border-radius: 4px;
+  position: relative;
+  flex-grow: 1;
+  transition: width 0.3s ease;
+  min-width: 5px;
+}
+
+.bar-count {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #fff;
+  font-size: 0.8rem;
+}
+
+/* Dark mode overrides */
+body.dark-mode {
+  --card-bg: #424242;
+  --card-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  --text-color: #eee;
+}
+
+.bar-index-0 {
+  background-color: #4caf50; /* base green */
+}
+.bar-index-1 {
+  background-color: #5fa34d;
+}
+.bar-index-2 {
+  background-color: #71974a;
+}
+.bar-index-3 {
+  background-color: #848b47;
+}
+.bar-index-4 {
+  background-color: #977f44;
+}
+.bar-index-5 {
+  background-color: #a97342;
+}
+.bar-index-6 {
+  background-color: #bc673f;
+}
+.bar-index-7 {
+  background-color: #cf5b3c;
+}
+.bar-index-8 {
+  background-color: #e14f39;
+}
+.bar-index-9 {
+  background-color: #f44336; /* base red */
+}
+.bar-index-10 {
+  background-color: #754200; /* base red */
+}

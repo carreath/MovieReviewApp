@@ -7,6 +7,7 @@ export default express
   .get('/:id', MovieController.getMovie.bind(MovieController))
   .post('/', MovieController.addMovie.bind(MovieController))
   .put('/:id', MovieController.updateMovie.bind(MovieController))
+  .put('/', MovieController.bulkUpdateMovies.bind(MovieController))
   .delete('/:id', MovieController.deleteMovie.bind(MovieController))
   .get('/search/title', MovieController.searchMoviesByTitle.bind(MovieController))
   .get('/search/director', MovieController.searchMoviesByDirector.bind(MovieController))

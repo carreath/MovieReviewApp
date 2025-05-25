@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Movie, Review } from "../../types";
 import { API_URL } from "../../App";
+import "./MovieSelection.css";
 
 interface MovieSelectionProps {
   userId: number;
@@ -54,38 +55,37 @@ const MovieSelection: React.FC<MovieSelectionProps> = ({ userId, selectedMovie, 
     fetchReviewsForMovie();
   }, [selectedMovie, onFetchReviews]);
 
+  useEffect(() => {
+    if (!selectedMovie && movies.length > 0) {
+      onSelectMovie(movies[0]);
+    }
+  }, [movies, selectedMovie, onSelectMovie]);
+
   return (
-    <div>
+    <div className="movie-selection">
       <h3>Movies</h3>
       {loading ? (
         <p>Loading movies...</p>
       ) : error ? (
         <p>{error}</p>
       ) : (
-        <div style={{ maxHeight: "300px", overflowY: "auto" }}>
-          {movies &&
-            movies.map((movie) => (
-              <div
-                key={movie.id}
-                onClick={() => onSelectMovie(movie)}
-                style={{
-                  padding: "0.5rem",
-                  marginBottom: "0.5rem",
-                  backgroundColor: selectedMovie && selectedMovie.id === movie.id ? "#c8e6c9" : "#f5f5f5",
-                  borderRadius: "4px",
-                  cursor: "pointer",
-                }}>
-                <h4>{movie.title}</h4>
-                <p style={{ fontSize: "0.9rem", color: "#555" }}>{movie.description}</p>
-                <div>
-                  {movie?.tags?.map((tag) => (
-                    <span key={tag} className="tag">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
+        <div className="movie-list">
+          {movies.map((movie) => (
+            <div
+              key={movie.id}
+              className={`movie-item ${selectedMovie && selectedMovie.id === movie.id ? "selected" : ""}`}
+              onClick={() => onSelectMovie(movie)}>
+              <h4>{movie.title}</h4>
+              <p className="movie-description">{movie.description}</p>
+              <div className="tags">
+                {movie?.tags?.map((tag) => (
+                  <span key={tag} className="tag">
+                    {tag}
+                  </span>
+                ))}
               </div>
-            ))}
+            </div>
+          ))}
         </div>
       )}
     </div>

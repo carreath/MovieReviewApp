@@ -1,0 +1,153 @@
+/* Container and Heading */
+.rankings-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  font-family: "Roboto", sans-serif;
+}
+
+.rankings-container h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #00796b;
+}
+
+.error {
+  color: red;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.loading {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #555;
+}
+
+/* Podium Styles */
+.podium-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  margin-bottom: 3rem;
+  position: relative;
+}
+
+.podium-item {
+  width: 200px;
+  margin: 0 1rem;
+  text-align: center;
+  background: #f8f8f8;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.podium-item:hover {
+  transform: translateY(-5px);
+}
+
+.podium-first {
+  order: 2;
+  transform: translateY(-20px);
+}
+
+.podium-second {
+  order: 1;
+}
+
+.podium-third {
+  order: 3;
+}
+
+.medal {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.movie-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 0.3rem;
+  color: #333;
+}
+
+.movie-rating,
+.movie-reviews {
+  font-size: 1rem;
+  color: #555;
+}
+
+/* Full Rankings Styles */
+.full-rankings {
+  margin-top: 2rem;
+}
+
+.full-rankings h3 {
+  text-align: center;
+  margin-bottom: 1rem;
+  color: #00796b;
+}
+
+.rankings-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ranking-item {
+  display: grid;
+  grid-template-columns: 60px 1fr 120px 120px 120px;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #eee;
+  transition: background 0.3s ease;
+}
+
+.ranking-item:hover {
+  background: #f1f1f1;
+}
+
+.rank {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #00796b;
+  text-align: center;
+}
+
+.movie {
+  font-size: 1.2rem;
+  color: #333;
+  padding-left: 0.5rem;
+}
+
+.avg-rating,
+.review-count {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #555;
+}
+
+.rankings-list-headers {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 60px 1fr 120px 120px 120px;
+  font-weight: bold;
+  color: #00796b;
+  padding: 1rem;
+  border-bottom: 2px solid #00796b;
+}
+
+.rankings-list-header-item {
+  align-content: center;
+  text-align: left;
+  font-size: 1.2rem;
+  color: #00796b;
+  padding: 0.5rem;
+  background: #e0f7fa;
+  border-radius: 8px;
+}

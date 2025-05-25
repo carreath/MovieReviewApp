@@ -7,10 +7,10 @@ interface BadReviewsProps {
 }
 
 const BadReviews: React.FC<BadReviewsProps> = ({ reviews }) => {
-  const badReviews = reviews.filter((r) => r.rating < 5);
+  const badReviews = reviews.filter((r) => r.rating <= 5);
 
   return (
-    <div>
+    <div style={{ maxWidth: "95vw", overflow: "hidden" }}>
       <h3>Bad Reviews</h3>
       {badReviews.length === 0 ? <p>No bad reviews yet.</p> : badReviews.map((review) => <ReviewCard key={review.id} review={review} />)}
     </div>

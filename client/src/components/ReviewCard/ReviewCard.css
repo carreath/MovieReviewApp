@@ -1,10 +1,10 @@
 .review-card {
-  background: #f9f9f9;
-  border: 1px solid #ddd;
+  background: var(--card-bg, #f9f9f9);
+  border: 1px solid var(--card-border, #ddd);
   border-radius: 8px;
   padding: 1rem;
   margin-bottom: 0.75rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--card-shadow, 0 2px 4px rgba(0, 0, 0, 0.1));
   transition: transform 0.2s ease;
 }
 
@@ -14,16 +14,21 @@
 
 .review-title {
   margin-bottom: 0.5rem;
-  color: #00796b;
+  color: var(--review-title-color, #00796b);
 }
 
 .review-user {
   margin-bottom: 0.5rem;
   font-size: 0.9rem;
-  color: #555;
+  color: var(--review-user-color, #555);
 }
 
 .review-comment {
   font-size: 1rem;
   line-height: 1.4;
+  color: var(--review-comment-color, #333);
+}
+
+pre {
+  white-space: pre-wrap;
 }

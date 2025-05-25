@@ -1,17 +1,33 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Movie, Review } from "../../types";
 import { API_URL } from "../../App";
+import "./ReviewForm.css";
 
 interface ReviewFormProps {
   userId: number;
   selectedMovie: Movie | null;
+  reviews?: Review[];
   onReviewCreatedOrUpdated: (review: Review) => void;
 }
 
-const ReviewForm: React.FC<ReviewFormProps> = ({ userId, selectedMovie, onReviewCreatedOrUpdated }) => {
-  const [rating, setRating] = useState<number>(5);
+const ReviewForm: React.FC<ReviewFormProps> = ({ userId, selectedMovie, reviews = [], onReviewCreatedOrUpdated }) => {
+  const [rating, setRating] = useState<number | undefined>(5);
   const [comment, setComment] = useState("");
   const [error, setError] = useState("");
+  const [existingReview, setExistingReview] = useState(false);
+
+  useEffect(() => {
+    const existingReviewObj = reviews.find((r) => r.userId === userId && selectedMovie && r.movieId === selectedMovie.id);
+    if (existingReviewObj) {
+      setRating(existingReviewObj.rating);
+      setComment(existingReviewObj.comment);
+      setExistingReview(true);
+    } else {
+      setExistingReview(false);
+      setRating(5);
+      setComment("");
+    }
+  }, [reviews, userId, selectedMovie, setExistingReview]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -47,16 +63,14 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ userId, selectedMovie, onReview
   };
 
   return (
-    <div>
-      <h3>Add a Review</h3>
-      {error && <p style={{ color: "red" }}>{error}</p>}
+    <div className="review-form">
+      <h3>{existingReview ? "Update Review" : "Add a Review"}</h3>
+      {error && <p className="error-message">{error}</p>}
       <form onSubmit={handleSubmit}>
         <label>Rating (1-10):</label>
-        <input type="number" min="1" max="10" value={rating} onChange={(e) => setRating(Number(e.target.value))} />
-
+        <input type="number" max="10" min="1" value={rating} onChange={(e) => setRating(e.target.value ? Number(e.target.value) : undefined)} />
         <label>Comment:</label>
         <textarea rows={3} value={comment} onChange={(e) => setComment(e.target.value)} placeholder="Write your review..." />
-
         <button type="submit">Submit</button>
       </form>
     </div>

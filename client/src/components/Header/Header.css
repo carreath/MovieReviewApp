@@ -1,5 +1,5 @@
 .app-header {
-  background: #0e86d4;
+  background: var(--header-bg, #0e86d4);
   color: #fff;
   padding: 1rem 2rem;
   display: flex;
@@ -15,6 +15,7 @@
 .header-right {
   display: flex;
   align-items: center;
+  gap: 1rem;
 }
 
 .user-info {
@@ -27,7 +28,22 @@
   margin-right: 1rem;
 }
 
-.seed-button {
+/* Dark mode toggle button */
+.toggle-dark-mode {
+  background: #696969;
+  color: #91d3ff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.toggle-dark-mode:hover {
+  background-color: #cce4f6;
+}
+
+.choose-user-button {
   background: #fff;
   color: #0e86d4;
   border: none;
@@ -37,6 +53,6 @@
   transition: background-color 0.2s ease;
 }
 
-.seed-button:hover {
+.choose-user-button:hover {
   background-color: #cce4f6;
 }

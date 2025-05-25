@@ -8,6 +8,7 @@ import SeedPage from "./pages/SeedPage";
 import RequireUser from "./components/RequireUser";
 import UserSelectPage from "./pages/UserSelectPage";
 import Cookies from "js-cookie";
+import RankingsPage from "./pages/Rankings";
 
 export const API_URL = `${window.location.protocol}//${window.location.hostname}:3001/api/v1`;
 
@@ -61,6 +62,9 @@ const App: React.FC = () => {
     }
   }, []);
 
+  const isLocalhost = useCallback(() => {
+    return window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
+  }, []);
   return (
     <Router>
       <Header user={user} />
@@ -74,15 +78,18 @@ const App: React.FC = () => {
               </RequireUser>
             }
           />
-          <Route
-            path="/seed"
-            element={
-              <RequireUser>
-                <SeedPage />
-              </RequireUser>
-            }
-          />
+          {isLocalhost() && (
+            <Route
+              path="/seed"
+              element={
+                <RequireUser>
+                  <SeedPage />
+                </RequireUser>
+              }
+            />
+          )}
           <Route path="/user-select" element={<UserSelectPage />} />
+          <Route path="/rankings" element={<RankingsPage />} />
         </Routes>
       </main>
       <Footer />

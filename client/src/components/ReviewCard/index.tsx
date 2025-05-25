@@ -35,7 +35,13 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
       <p className="review-score">
         <strong>Score:</strong> {review.rating}
       </p>
-      <p className="review-comment">{review.comment}</p>
+      <pre
+        className="review-comment"
+        style={{
+          maxWidth: "100%",
+        }}>
+        {review.comment}
+      </pre>
     </div>
   );
 };

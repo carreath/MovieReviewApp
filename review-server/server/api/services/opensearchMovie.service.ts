@@ -11,7 +11,7 @@ export interface Movie {
   releaseDate: string; // ISO date string
   genre: string;
   description: string;
-  rating?: number;
+  recommended_by?: string; // Optional field for the user who recommended the movie
 }
 
 // Define the structure for creating a new movie.
@@ -21,8 +21,9 @@ export interface CreateMovieRequest {
   releaseDate: string;
   genre: string;
   description: string;
-  rating?: number;
+  recommended_by?: string; // Optional field for the user who recommended the movie
 }
+
 
 export class OpenSearchMovieService {
   private client: Client;
@@ -54,7 +55,7 @@ export class OpenSearchMovieService {
               releaseDate: { type: 'date' },
               genre: { type: 'keyword' },
               description: { type: 'text' },
-              rating: { type: 'float' }
+              recommended_by: { type: 'keyword' }
             }
           }
         }
@@ -83,8 +84,8 @@ export class OpenSearchMovieService {
       // Cast the aggregation result to StatsAggregate to access the "value" property.
       const maxIdAgg = body.aggregations?.maxId as StatsAggregate;
       const maxId = maxIdAgg?.value || 0;
-      this.idCounter = maxId + 1;
-      L.info(`User ID counter set to ${this.idCounter}`, 'OpenSearchUsersService');
+      this.idCounter = maxId + 1
+      L.info(`Movie ID counter set to ${this.idCounter}`, 'OpenSearchUsersService');
     } catch (error) {
       L.error("Error retrieving current max user id", error, 'OpenSearchUsersService');
     }
@@ -115,6 +116,9 @@ export class OpenSearchMovieService {
       index: this.index,
       size: MAX_RETURNED_RESULTS,
       body: {
+        sort: [
+          { id: { order: "desc" } }
+        ],
         query: {
           match_all: {}
         }
@@ -148,7 +152,7 @@ export class OpenSearchMovieService {
       releaseDate: movieData.releaseDate,
       genre: movieData.genre,
       description: movieData.description,
-      rating: movieData.rating
+      recommended_by: movieData.recommended_by || "Unknown"
     };
 
     L.info(`Creating movie: ${JSON.stringify(movie)}`, 'OpenSearchMoviesService');
@@ -210,7 +214,9 @@ export class OpenSearchMovieService {
       size: MAX_RETURNED_RESULTS,
       body: {
         query: {
-          match: { title }
+          match: {
+            title 
+         }
         }
       }
     });
@@ -226,12 +232,48 @@ export class OpenSearchMovieService {
       size: MAX_RETURNED_RESULTS,
       body: {
         query: {
-          term: { director }
+          term: { director: {
+            value: director
+          } 
+         }
         }
       }
     });
     const hits = body.hits.hits;
     return hits.map((hit: any) => hit._source as Movie);
+  }
+
+  // Search for movies by genre.
+  async searchByGenre(genre: string): Promise<Movie[]> {
+    L.info(`Searching movies by genre: ${genre}`, 'OpenSearchMoviesService');
+    const { body } = await this.client.search({
+      index: this.index,
+      size: MAX_RETURNED_RESULTS,
+      body: {
+        query: {
+          term: { 
+            genre: {
+              value: genre
+            } 
+          }
+        }
+      }
+    });
+    const hits = body.hits.hits;
+    return hits.map((hit: any) => hit._source as Movie);
+  }
+
+  async bulkUpdate(movie_updates: []): Promise<void> {
+    L.info(`Updating all movies`, 'OpenSearchMoviesService');
+    for (const movie of movie_updates) {
+      const { id, ...partial } = movie as Movie;
+      try {
+        await this.update(id, partial);
+      } catch (error) {
+        L.error(`Error updating movie with id ${id}`, error, 'OpenSearchMoviesService');
+      }
+    }
+    L.info(`All movies updated`, 'OpenSearchMoviesService');
   }
 }
 

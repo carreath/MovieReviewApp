@@ -63,6 +63,19 @@ export class MovieController {
   }
 
   /**
+   * Bulk update movies
+   */
+  async bulkUpdateMovies(req: Request, res: Response): Promise<void> {
+    try {
+      const movies = req.body;
+      const updatedMovies = await opensearchMovieService.bulkUpdate(movies);
+      res.status(200).json(updatedMovies);
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to bulk update movies', details: error });
+    }
+  }
+
+  /**
    * Delete a movie.
    */
   async deleteMovie(req: Request, res: Response): Promise<void> {

@@ -14,6 +14,12 @@ export interface Review {
   date: string;
 }
 
+export interface ReviewsAggregationResult {
+  totalReviews: number;
+  reviewsByMovie: { movieId: number; reviewCount: number }[];
+}
+
+
 // Define the structure for creating a new review.
 export interface CreateReviewRequest {
   movieId: number;
@@ -82,7 +88,7 @@ export class OpenSearchReviewsService {
       const maxIdAgg = body.aggregations?.maxId as StatsAggregate;
       const maxId = maxIdAgg?.value || 0;
       this.idCounter = maxId + 1;
-      L.info(`User ID counter set to ${this.idCounter}`, 'OpenSearchUsersService');
+      L.info(`Review ID counter set to ${this.idCounter}`, 'OpenSearchUsersService');
     } catch (error) {
       L.error("Error retrieving current max user id", error, 'OpenSearchUsersService');
     }

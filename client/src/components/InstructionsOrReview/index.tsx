@@ -1,6 +1,7 @@
 import React, { useCallback } from "react";
 import { Movie, Review } from "../../types";
 import { API_URL } from "../../App";
+import ReviewCard from "../ReviewCard";
 
 interface Props {
   userId: number;
@@ -61,10 +62,7 @@ const InstructionsOrReview: React.FC<Props> = ({ userId, selectedMovie, reviews,
   return (
     <div>
       <h3>Your Current Review</h3>
-      <p>
-        <strong>Rating:</strong> {existingReview.rating}/10
-      </p>
-      <p>{existingReview.comment}</p>
+      <ReviewCard review={existingReview} />
       <br />
       <p>Deleting your review will permanently remove it from the site.</p>
       <button onClick={handleDelete}>Delete Review</button>
